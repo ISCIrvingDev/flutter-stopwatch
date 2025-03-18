@@ -32,7 +32,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  // * Bussiness logic
+  // * Business logic
   int seconds = 0, minutes = 0, hours = 0;
   String digitSeconds = '00', digitMinutes = '00', digitHours = '00';
   Timer? timer;
@@ -119,7 +119,7 @@ class _HomePageState extends State<HomePage> {
             children: [
               Center(
                 child: Text(
-                  '00:00:00',
+                  '$digitHours:$digitMinutes:$digitSeconds',
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 82,
@@ -134,7 +134,34 @@ class _HomePageState extends State<HomePage> {
                   color: Color(0XFF323F68),
                   borderRadius: BorderRadius.circular(8),
                 ),
+                child: ListView.builder(
+                  itemCount: laps.length,
+                  itemBuilder:
+                      (context, index) => Padding(
+                        padding: EdgeInsets.all(16),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              '${index + 1}° Lap',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 16,
+                              ),
+                            ),
+                            Text(
+                              laps[index],
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 16,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                ),
               ),
+
               SizedBox(height: 20),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -144,9 +171,9 @@ class _HomePageState extends State<HomePage> {
                       shape: const StadiumBorder(
                         side: BorderSide(color: Colors.blue),
                       ),
-                      onPressed: () {},
+                      onPressed: () => !started ? start() : stop(),
                       child: Text(
-                        'Start',
+                        !started ? 'Start' : 'Pause',
                         style: TextStyle(color: Colors.white),
                       ),
                     ),
@@ -155,7 +182,7 @@ class _HomePageState extends State<HomePage> {
                   SizedBox(width: 8),
                   IconButton(
                     color: Colors.white,
-                    onPressed: () {},
+                    onPressed: addLaps,
                     icon: Icon(Icons.flag),
                   ),
                   SizedBox(width: 8),
@@ -166,7 +193,7 @@ class _HomePageState extends State<HomePage> {
                       shape: const StadiumBorder(
                         side: BorderSide(color: Colors.blue),
                       ),
-                      onPressed: () {},
+                      onPressed: reset,
                       child: Text(
                         'Reset',
                         style: TextStyle(color: Colors.white),
